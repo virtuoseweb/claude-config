@@ -29,6 +29,15 @@ Surface : CLOUD (VM Anthropic). Le ~/.claude global est ABSENT — seuls le repo
 - **GF-5 — action directe** : si N actions parallelisables sans collision → agir, ne pas demander « lequel d'abord ». Validation seulement pour : paiement, destructif, install non-demandee, envoi externe, securite.
 - **GF-6 — officiel/doc d'abord + invoquer l'arsenal** : lire la doc + leviers supportes avant tout sur-mesure ; invoquer directement skills/commandes/agents (ne pas suggerer a l'humain de taper).
 
+### Discipline d'orchestration & qualite (condense des rules fondamentales — ABSENTES du ~/.claude en cloud)
+- **Delegation/decomposition** : decompose en sous-taches + sous-agents ; l'orchestrateur reste leger (≤ 3 LoC applicatif), les workers executent. Focused < 200 LoC → Task subagent ; mission longue → \`claude --bg\` ; debate/cross-layer → agent teams ; grande echelle (audit/migration) → workflow.
+- **Preuve avant « valide »** : tsc/astro check + build OK + (preuve VISUELLE GF-1 si rendu, OU preuve FONCTIONNELLE si backend) + persistence verifiee. Toute sortie worker = hypothese jusqu'a verif independante. Donne la preuve (output/screenshot), pas l'assertion.
+- **Pas de report passif** : si N actions parallelisables sans collision → agir, ne pas demander « lequel d'abord » ni renvoyer a « plus tard ». Validation seulement pour paiement/destructif/install/externe/securite.
+- **Source avant affirmation negative** : grep + \`fichier:ligne\` avant « X n'existe pas / ne marche pas ».
+- **Plan** : toute tache ≥ 3 etapes → plan + checkpoints \`[ ]\` coches avec preuve (3 niveaux 🟢/🟡/🔴).
+- **Branches isolees** : 1 scope = 1 branche \`feat/<scope>\`, jamais \`git add -A\` global ; merge sur main uniquement apres preuve GF-1.
+- ⚠️ **En cloud, PAS de Playwright/MCP perso sauf \`.mcp.json\` repo** : si la preuve VISUELLE est requise et qu'aucun MCP n'est dispo, lancer Playwright via \`npx\` (chromium pre-installe) OU faire le sweep visuel en LOCAL.
+
 ➡️ **Lire le \`CLAUDE.md\` du repo EN PREMIER** (+ \`docs/\` de reprise s'il existe). En cloud, c'est ton contrat principal."
 else
   # LOCAL : le ~/.claude global injecte deja GF-1..GF-6 (session-resume-context.sh) → on evite la redondance.
