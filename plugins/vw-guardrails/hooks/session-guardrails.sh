@@ -38,6 +38,11 @@ Surface : CLOUD (VM Anthropic). Le ~/.claude global est ABSENT — seuls le repo
 - **Branches isolees** : 1 scope = 1 branche \`feat/<scope>\`, jamais \`git add -A\` global ; merge sur main uniquement apres preuve GF-1.
 - ⚠️ **En cloud, PAS de Playwright/MCP perso sauf \`.mcp.json\` repo** : si la preuve VISUELLE est requise et qu'aucun MCP n'est dispo, lancer Playwright via \`npx\` (chromium pre-installe) OU faire le sweep visuel en LOCAL.
 
+### Ressources vw-guardrails dispo en cloud (le ~/.claude global etant absent)
+- **VW Cloud Playbook** (rules dev/qualite/orchestration condensees, cloud-adaptees) : \`\${CLAUDE_PLUGIN_ROOT}/reference/vw-cloud-playbook.md\` — lis-le quand tu hesites sur la discipline (orchestration, preuve, plan, build, design system, autonomie).
+- **Routage situationnel auto** : a chaque prompt, le hook \`rules-router.sh\` injecte les hints des rules pertinentes selon tes mots-cles (equivalent cloud du rules-enforcer global).
+- **Agents a invoquer** (tool \`Agent\`) : \`visual-proof-reviewer\` (preuve visuelle/fonctionnelle), \`code-reviewer\` (qualite/securite), \`code-explorer\` (cartographie archi en lecture seule). Delegue-leur au lieu de tout faire en mono-bloc.
+
 ➡️ **Lire le \`CLAUDE.md\` du repo EN PREMIER** (+ \`docs/\` de reprise s'il existe). En cloud, c'est ton contrat principal."
 else
   # LOCAL : le ~/.claude global injecte deja GF-1..GF-6 (session-resume-context.sh) → on evite la redondance.

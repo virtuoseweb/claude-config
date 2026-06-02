@@ -1,7 +1,7 @@
 {
   "name": "vw-guardrails",
-  "version": "0.2.0",
-  "description": "Garde-fous VirtuoseWeb portables (GF-1 à GF-6) + agent de preuve empirique (visuelle ET fonctionnelle) + commande /guardrails. Conçu pour être hérité par chaque repo (enabledPlugins) et fonctionner identiquement en cloud (Claude Code on the web) et en local.",
+  "version": "0.3.0",
+  "description": "Config VirtuoseWeb portable héritée par chaque repo, identique en cloud (Claude Code on the web) et en local : garde-fous GF-1 à GF-6 (hook SessionStart), routage situationnel des rules en cloud (hook UserPromptSubmit + VW Cloud Playbook), agents visual-proof-reviewer / code-reviewer / code-explorer, commande /guardrails.",
   "author": {
     "name": "Simon Beros"
   },

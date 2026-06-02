@@ -12,6 +12,19 @@
         "description": "Recharge les garde-fous VirtuoseWeb (GF-1 à GF-6) au boot — cloud et local",
         "id": "vw:session:guardrails"
       }
+    ],
+    "UserPromptSubmit": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash \"${CLAUDE_PLUGIN_ROOT}/hooks/rules-router.sh\""
+          }
+        ],
+        "description": "Routage situationnel des rules en CLOUD (mot-clé → hint + pointeur playbook) ; muet en local",
+        "id": "vw:prompt:rules-router"
+      }
     ]
   }
 }

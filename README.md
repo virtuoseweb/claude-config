@@ -14,16 +14,39 @@ to the repo run »*). Conséquences :
 - ✅ **Plugin déclaré dans `.claude/settings.json`** = *installé au démarrage de session depuis le marketplace*
   (table officielle « What's available in cloud sessions »). Versionné, zéro dérive, un seul point de mise à jour.
 
-## Contenu : plugin `vw-guardrails`
+## Contenu : plugin `vw-guardrails` (v0.3.0)
+
+Le plugin mire l'**architecture hybride locale** (fondamentales always-on / situationnelles lazy) côté cloud :
 
 | Composant | Rôle |
 |---|---|
-| `hooks/hooks.json` + `hooks/session-guardrails.sh` | Hook **SessionStart** : recharge GF-1 à GF-6 au boot, détecte la surface (cloud vs local). Portable bash+python3. |
-| `agents/visual-proof-reviewer.md` | Reviewer adversarial **preuve empirique** (visuelle ET fonctionnelle backend/API/DB). |
-| `commands/guardrails.md` | `/vw-guardrails:guardrails` — réaffiche/recharge les garde-fous à la demande. |
+| `hooks/session-guardrails.sh` (**SessionStart**) | Recharge GF-1 à GF-6 + discipline condensée au boot, détecte la surface (☁️ cloud / 💻 local). En cloud, annonce le playbook + les agents dispo. |
+| `hooks/rules-router.sh` (**UserPromptSubmit**) | **Routage situationnel des rules en CLOUD** : mot-clé du prompt → hint actionnable + pointeur playbook (équivalent cloud du `rules-enforcer` global). **Muet en local** (le global gère). |
+| `reference/vw-cloud-playbook.md` | **Rules dev/qualité/orchestration condensées + cloud-adaptées** (0 chemin local, 0 Codex). Référence profonde lue à la demande. |
+| `agents/visual-proof-reviewer.md` | Reviewer **preuve empirique** (visuelle ET fonctionnelle backend/API/DB). |
+| `agents/code-reviewer.md` | Reviewer **qualité/sécurité** (cloud-natif ; feature-dev/pr-review absents en cloud). |
+| `agents/code-explorer.md` | **Cartographie d'archi** en lecture seule avant feature/refactor. |
+| `commands/guardrails.md` | `/vw-guardrails:guardrails` — recharge les garde-fous à la demande. |
 
-Lean par design (cloud = pas de bloat). Le `~/.claude` global local reste l'arsenal complet (56 rules, ecc, MCP) ;
-ce plugin = le **sous-ensemble portable** qui doit suivre partout.
+Lean par design (cloud = pas de bloat). Le `~/.claude` global local reste l'arsenal complet (56 rules, ecc, ~124 MCP) ;
+ce plugin = le **sous-ensemble portable** qui doit suivre partout. Répartition : **rules + hooks + agents → plugin** (hérités au boot) ; **MCP → `.mcp.json` du repo** (les `mcpServers` de plugin ne sont pas auto-activés — cf README ecc).
+
+## MCP en cloud : via `.mcp.json` du repo (pas le plugin)
+
+En cloud, les serveurs MCP perso (`claude mcp add`, `~/.claude`) ne suivent pas. Pour qu'un repo ait du MCP en cloud,
+le déclarer dans **`<repo>/.mcp.json`** (committé). Template recommandé pour un repo web :
+
+```json
+{
+  "mcpServers": {
+    "playwright": { "type": "stdio", "command": "npx", "args": ["-y", "@playwright/mcp@latest"], "env": {} },
+    "context7":   { "type": "stdio", "command": "npx", "args": ["-y", "@upstash/context7-mcp@latest"], "env": {} }
+  }
+}
+```
+
+- **playwright** = preuve GF-1 visuelle (screenshot + getComputedStyle) en cloud.
+- **context7** = docs lib à jour (Astro/React/Tailwind…). Ajouter d'autres serveurs (Neon, etc.) selon les besoins du repo ; ceux qui exigent une auth/secret nécessitent une variable d'env côté session.
 
 ## Installation LOCALE (une fois, sur la machine)
 
@@ -62,6 +85,8 @@ En **local**, le plugin est déjà installé (étape ci-dessus) ; la déclaratio
 ## Validation
 
 ```bash
-claude plugin validate ./plugins/vw-guardrails     # schéma OK (version obligatoire ; pas de champ hooks/agents dans plugin.json)
+claude plugin validate .                            # marketplace + plugin (version obligatoire ; pas de champ hooks/agents dans plugin.json)
 bash plugins/vw-guardrails/hooks/session-guardrails.sh | python3 -m json.tool   # JSON SessionStart valide
+# rules-router : muet en local, injecte en cloud (simulation)
+printf '{"prompt":"refactor hero + deploy vercel"}' | CLAUDE_CODE_REMOTE_SESSION_ID=x CLAUDE_PLUGIN_ROOT=$PWD/plugins/vw-guardrails bash plugins/vw-guardrails/hooks/rules-router.sh | python3 -m json.tool
 ```
