@@ -1,0 +1,12 @@
+{
+  "name": "vw-guardrails",
+  "version": "0.1.0",
+  "description": "Garde-fous VirtuoseWeb portables (GF-1 à GF-6) + agent de preuve empirique (visuelle ET fonctionnelle) + commande /guardrails. Conçu pour être hérité par chaque repo (enabledPlugins) et fonctionner identiquement en cloud (Claude Code on the web) et en local.",
+  "author": {
+    "name": "Simon Beros"
+  },
+  "homepage": "https://github.com/virtuoseweb/claude-config",
+  "repository": "https://github.com/virtuoseweb/claude-config",
+  "license": "MIT",
+  "keywords": ["guardrails", "virtuoseweb", "cloud", "review", "empirical-proof"]
+}

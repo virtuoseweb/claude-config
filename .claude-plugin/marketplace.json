@@ -1,0 +1,17 @@
+{
+  "name": "virtuoseweb",
+  "owner": {
+    "name": "Simon Beros",
+    "email": "simonberos47@gmail.com"
+  },
+  "metadata": {
+    "description": "Config Claude Code partagée VirtuoseWeb — garde-fous, agents et conventions portables (local + cloud) pour tous les repos."
+  },
+  "plugins": [
+    {
+      "name": "vw-guardrails",
+      "source": "./plugins/vw-guardrails",
+      "description": "Garde-fous VirtuoseWeb (GF-1 à GF-6) + agent preuve empirique + commande guardrails. Hérité par chaque repo via enabledPlugins → fonctionne en cloud (Claude Code on the web) ET en local."
+    }
+  ]
+}
