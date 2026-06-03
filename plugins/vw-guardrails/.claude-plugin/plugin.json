@@ -1,6 +1,6 @@
 {
   "name": "vw-guardrails",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Config VirtuoseWeb portable héritée par chaque repo, identique en cloud (Claude Code on the web) et en local : garde-fous GF-1 à GF-6 (hook SessionStart), routage situationnel des rules en cloud (hook UserPromptSubmit + VW Cloud Playbook), agents visual-proof-reviewer / code-reviewer / code-explorer, commande /guardrails.",
   "author": {
     "name": "Simon Beros"
@@ -8,5 +8,11 @@
   "homepage": "https://github.com/virtuoseweb/claude-config",
   "repository": "https://github.com/virtuoseweb/claude-config",
   "license": "MIT",
-  "keywords": ["guardrails", "virtuoseweb", "cloud", "review", "empirical-proof"]
+  "keywords": [
+    "guardrails",
+    "virtuoseweb",
+    "cloud",
+    "review",
+    "empirical-proof"
+  ]
 }

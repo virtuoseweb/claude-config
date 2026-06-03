@@ -45,9 +45,10 @@ Surface : CLOUD (VM Anthropic). Le ~/.claude global est ABSENT — seuls le repo
 
 ➡️ **Lire le \`CLAUDE.md\` du repo EN PREMIER** (+ \`docs/\` de reprise s'il existe). En cloud, c'est ton contrat principal."
 else
-  # LOCAL : le ~/.claude global injecte deja GF-1..GF-6 (session-resume-context.sh) → on evite la redondance.
+  # LOCAL : les GF vivent dans le CLAUDE.md du repo (source portable) + le ~/.claude global S'IL est present.
+  # On ne PRESUME pas la presence du global (un collaborateur tiers ne l'a pas) → on pointe le contrat du repo.
   CTX="## 🛡️ vw-guardrails actif (💻 LOCAL) — repo \`$REPO\` (\`$BRANCH\`, \`$LAST\`)
-Garde-fous GF-1..GF-6 fournis par le ~/.claude global. Reviewer preuve : agent \`visual-proof-reviewer\`. Commande : \`/vw-guardrails:guardrails\`. Lire le CLAUDE.md du repo en premier."
+Garde-fous GF-1..GF-6 : voir la section « Garde-fous » du **CLAUDE.md du repo** (source portable, presente meme sans config globale), completee par le ~/.claude global s'il est present. Reviewer preuve : agent \`visual-proof-reviewer\`. Commande : \`/vw-guardrails:guardrails\`. Lire le CLAUDE.md du repo EN PREMIER."
 fi
 
 export CTX
